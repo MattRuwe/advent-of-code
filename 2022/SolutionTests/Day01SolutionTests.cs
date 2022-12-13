@@ -15,7 +15,10 @@ namespace SolutionTests
             var result = sut.GetTotalCalories();
 
             //assert
-            Assert.IsTrue(result > 0);
+            Assert.IsTrue(result.Length == 3);
+            Assert.IsTrue(result.Contains(68034));
+            Assert.IsTrue(result.Contains(67232));
+            Assert.IsTrue(result.Contains(71023));
         }
     }
 }

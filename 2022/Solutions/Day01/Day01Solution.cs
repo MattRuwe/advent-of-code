@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace Solutions.Day01
 {
     public class Day01Solution
     {
-        public int GetTotalCalories()
+        public int[] GetTotalCalories()
         {
             var fileContents = Helpers.ReadEmbeddedFile(1, "Input.txt");
             var lines = Regex.Split(fileContents, "\r\n");
-            var maxCalories = 0;
             var currentCalories = 0;
+
+            var maxCalories = Enumerable.Range(0, 3).ToList();
 
             foreach (var line in lines)
             {
@@ -26,12 +21,19 @@ namespace Solutions.Day01
                 }
 
                 currentCalories += int.Parse(line);
-                if (currentCalories > maxCalories)
-                    maxCalories = currentCalories;
+                var minAndIndex = maxCalories.IndexOfMin();
+                if (currentCalories > minAndIndex.Value)
+                    maxCalories[minAndIndex.Index] = currentCalories;
+                  
             }
 
-            Console.WriteLine($"Max Calories = {maxCalories}");
-            return maxCalories;
+            foreach (var elf in maxCalories)
+            {
+                Console.WriteLine(elf);   
+            }
+            Console.WriteLine($"Max Calories = {maxCalories.Max()}");
+            Console.WriteLine($"Top 3 Max Calories = {maxCalories.Sum()}");
+            return maxCalories.ToArray();
         }
     }
 }

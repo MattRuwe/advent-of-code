@@ -39,5 +39,32 @@ namespace Solutions
             second = list.Count > 1 ? list[1] : default(T); // or throw
             rest = list.Skip(2).ToList();
         }
+
+        public static (int Index, int Value) IndexOfMin(this IList<int> self)
+        {
+            if (self == null)
+            {
+                throw new ArgumentNullException("self");
+            }
+
+            if (self.Count == 0)
+            {
+                throw new ArgumentException("List is empty.", "self");
+            }
+
+            int min = self[0];
+            int minIndex = 0;
+
+            for (int i = 1; i < self.Count; ++i)
+            {
+                if (self[i] < min)
+                {
+                    min = self[i];
+                    minIndex = i;
+                }
+            }
+
+            return (minIndex, min);
+        }
     }
 }
